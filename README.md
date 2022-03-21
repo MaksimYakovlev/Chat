@@ -10,4 +10,4 @@
 * [сайт](https://chat-21f8c7ad.netlify.app)
 
 
-* https://github.com/MaksimYakovlev/Chat/pull/1
+* [Sprint 1]https://github.com/MaksimYakovlev/Chat/pull/1
