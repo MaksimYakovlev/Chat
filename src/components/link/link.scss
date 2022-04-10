@@ -1,0 +1,11 @@
+@import './src/theme';
+
+a.link {
+    color: $color-blue;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a.link:hover {
+    opacity: 0.6;
+}

@@ -1,15 +1,15 @@
 const express = require('express')
+const PORT = 3000
+
+
+
 const app = express()
-const port = 3000
+
+// app.use(express.json());
+
+app.use(express.static(__dirname + '/dist'));
 
 
-app.set('view engine', 'hbs');
-app.set('views', './views');
-app.use(express.json());
-
-app.use(express.static(__dirname + 'dist'));
-
-
-app.listen(port, () => {
-    console.log(`Запуск сервера на порту ${port}`)
+app.listen(PORT, () => {
+    console.log(`Запуск сервера на порту ${PORT}`)
 });
