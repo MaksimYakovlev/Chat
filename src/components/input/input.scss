@@ -1,0 +1,23 @@
+@import './src/theme';
+
+.input {
+  padding: 15px 0 0 0;
+  max-width: 300px;
+  width: 220px;
+}
+
+.input__input {
+  width: 100%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 2px solid $color-light-end-grey;
+  margin-bottom: 5px;
+}
+
+.input__error {
+  color: $color-red;
+  font-size: 12px;
+  text-align: center;
+  height: 12px;
+}
