@@ -11,3 +11,4 @@
 
 
 * [Sprint 1]https://github.com/MaksimYakovlev/Chat/pull/1
+* [Sprint 2]https://github.com/MaksimYakovlev/middle.messenger.praktikum.yandex/pull/3
