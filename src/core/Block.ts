@@ -1,6 +1,6 @@
 import EventBus from './EventBus';
-import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
+import {uid} from "../utils/helpers";
 
 type Events = Values<typeof Block.EVENTS>;
 
@@ -18,7 +18,7 @@ export default class Block<P = any> {
     FLOW_RENDER: 'flow:render',
   } as const;
 
-  public id = nanoid(6);
+  public id = uid();
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
