@@ -1,46 +1,36 @@
-@import 'theme.scss';
-
-html, body {
-  height: 100%;
-}
-
-body {
-  font-family: sans-serif;
-  //background: $color-background;
-  display: flex;
-  flex-direction: column;
-  //justify-content: center;
-  //align-items: center;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-  justify-content: center;
-  align-items: center;
-}
-
 .screen {
-  width: $screen-width;
-  height: 560px;
-  background: #e2f0fa;
+  width: var(--screen-width);
+  height: var(--screen-height);
+  background: var(--screen-background);
   display: flex;
   flex-direction: column;
   margin: 5px;
   position: relative;
-  border-radius: 8px 48px;
+
+  border-radius: 45px;
   overflow: hidden;
-  box-shadow: $color-shadow;
+}
+
+.screen_loading::after {
+  content: 'awesome loader...';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fffffff5;
+  position: absolute;
 }
 
 .screen__loading-progress {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   height: 3px;
-  width: 0;
+  width: 0%;
   opacity: 1;
   background-color: red;
   z-index: 999999;
@@ -52,7 +42,7 @@ body {
 
 @keyframes slidein {
   from {
-    width: 0;
+    width: 0%;
   }
 
   to {
@@ -83,7 +73,7 @@ body {
 }
 
 .screen__content {
-  background: #fff;
+  background: var(--screen-content-background);
   flex-grow: 1;
   border-radius: 50px 50px 0 0;
   padding: 15px 15px 15px 15px;
@@ -101,4 +91,3 @@ body {
   align-items: center;
   justify-content: center;
 }
-

@@ -1,38 +1,47 @@
-import Block from '../../core/Block';
-import './profile.scss'
+import Block from 'core/Block';
+import { withStore, withRouter } from 'utils';
+import { logout } from 'services/auth';
+import {BrowserRouter, Store} from 'core';
 
-export class ProfilePage extends Block {
+type ProfilePageProps = {
+  router: BrowserRouter;
+  store: Store<AppState>;
+  onLogout?: () => void;
+  userLogin?: () => string | undefined;
+  userName?: () => string | undefined;
+  screenTitle?: () => string | undefined;
+};
 
+export class ProfilePage extends Block<ProfilePageProps> {
+  constructor(props: ProfilePageProps) {
+    super(props);
 
-    render() {
+    this.setProps({
+      onLogout: () => this.props.store.dispatch(logout),
+      userLogin: () => this.props.store.getState().user?.login,
+      userName: () => this.props.store.getState().user?.firstName,
+      screenTitle: () =>
+        `Hello, ${this.props.store.getState().user?.firstName} 👋`,
+    });
+  }
 
-        // language=hbs
-        return `
-            <div class="container">
-                <div class="profile">
+  componentDidMount() {
+    // if (!this.props.store.getState().user) {
+    //   this.props.router.go('/onboarding');
+    // }
+  }
 
-                    <div class="profile__avatar">
-                        <div>Аватар</div>
-
-                        <p>Иван</p>
-                    </div>
-                    <div class="profile__data">
-                        <div><span>Почта</span>pochta@yandex.ru</div>
-                        <hr/>
-                        <div><span>Логин</span>ivanivanov</div>
-                        <hr/>
-                        <div><span>Имя</span>Иван</div>
-                        <hr/>
-                    </div>
-                    <div class="profile__change">
-                        {{{Link text="Изменить данные" to="/login"}}}
-                        <hr/>
-                        {{{Link text="Изменить пароль" to="/login"}}}
-                        <hr/>
-                        {{{Link text="Выйти" to="/"}}}
-                    </div>
-                </div>
-            </div>
-        `;
-    }
+  render() {
+    return `
+    {{#Layout name="Profile" title=screenTitle}}
+      {{{Button text="Logout" onClick=onLogout}}}
+      <div>
+        login: {{userLogin}}<br />
+        first_name: {{userName}}
+      </div>
+    {{/Layout}}
+    `;
+  }
 }
+
+export default withRouter(withStore(ProfilePage));

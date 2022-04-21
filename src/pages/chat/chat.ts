@@ -1,14 +1,31 @@
-import Block from '../../core/Block';
-import './chat.scss'
+import {Block, BrowserRouter, Store} from "core";
+import './chat.css';
+import {withRouter, withStore} from "../../utils";
 
 
-export class ChatPage extends Block {
+type ChatPageProps = {
+    router: BrowserRouter;
+    store: Store<AppState>;
+    formError?: () => string | null;
+};
+
+export class ChatPage extends Block<ChatPageProps> {
+
+    componentDidMount() {
+        if (this.props.store.getState().user) {
+            this.props.router.go('/chat');
+        } else {
+            this.props.router.go('/login');
+        }
+    }
+
     protected getStateFromProps() {
         this.state = {
             values: {
                 message: '',
             },
             onMessage: () => {
+
                 const messageData = {
                     message: (this.refs.message.firstElementChild as HTMLInputElement).value,
                 };
@@ -20,7 +37,6 @@ export class ChatPage extends Block {
 
                 this.setState(nextState);
 
-                console.log('action/message', messageData);
             }
         }
     }
@@ -29,67 +45,10 @@ export class ChatPage extends Block {
         const {values} = this.state;
         // language=hbs
         return `
-            <div class="chat">
-                <div class="chat__user">
-                    <div class="chat__user_search">
-                        <div>
-                            {{{Link text="Профиль" to="/profile"}}}
-                        </div>
-                        {{{Input
-                                ref="login"
-                                id="login"
-                                type="text"
-                                placeholder="Поиск"
-                        }}}
-                    </div>
-                    <div class="chat__user_list">
-                        <div>
-                            <hr/>
-                            <div class="avatar__wrap">
-                                <img src="../../../static/images/Color.png" alt="user avatar"
-                                     class="avatar users__avatar"
-                                     id="userAvatar">
-                            </div>
-                            <div>
-                                <p>Design Destroyer</p>
-                                <p>Так увлёкся работой по курсу, что совсем забыл его анонсир...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="chat__messages">
-                    <div class="chat__messages_user">
-                        <div class="chat__messages_user-info">
-                            <div class="chat__messages_user-info_avatar">
-
-                            </div>
-                            <div class="chat__messages_user-info_name">
-                                Вадим
-                            </div>
-                        </div>
-                        <div class="chat__messages_user-actions">
-                            {{{Button
-                                    text="..."
-                                    onClick=onActions
-                            }}}
-                        </div>
-
-                    </div>
-                    <hr/>
-
-
-                    <div class="chat__messages_content">
-                        <p>Так увлёкся работой по курсу, что совсем забыл его анонсир...</p>
-                    </div>
-                    <hr/>
+            <div class="screen screen_theme_full">
+                <div class="screen__content">
                     <div class="chat__messages_entry">
-
-                        {{{Button
-                                text="..."
-                                onClick=onMessage
-                        }}}
+                        
                         {{{Input
                                 value="${values.message}"
                                 ref="message"
@@ -98,16 +57,14 @@ export class ChatPage extends Block {
                                 placeholder="Сообщение"
                         }}}
                         {{{Button
-                                text="->"
+                                text=">"
                                 onClick=onMessage
                         }}}
                     </div>
-
-                </div>
-            </div>
-
             </div>
             </div>
         `
     }
 }
+
+export default withRouter(withStore(ChatPage));

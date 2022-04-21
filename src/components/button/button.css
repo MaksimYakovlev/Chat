@@ -1,11 +1,9 @@
-@import './src/theme';
-
 .button {
   margin: 10px;
 }
 
 .button__button {
-  background: $color-cool-gray-88;
+  background: var(--message-background);
   border: none;
   cursor: pointer;
   color: white;
@@ -15,6 +13,5 @@
 }
 
 .button__button:hover {
-  background: $color-cool-gray-100;
-  //opacity: 0.8;
+  opacity: 0.8;
 }

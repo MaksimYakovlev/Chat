@@ -1,8 +1,30 @@
-import Block from '../../core/Block';
-import '../../app.scss'
-import {isValidEmail, isValidPhone, isValidPassword} from '../../helpers'
+import {Block, BrowserRouter, Store} from "core";
+import {withRouter, withStore} from "utils";
+import {isValidEmail, isValidPassword, isValidPhone, LOGIN_MAX_LEN, LOGIN_MIN_LEN} from "utils/validation";
+import {login} from "../../services/auth";
 
-export class RegistrationPage extends Block {
+type RegistrationPageProps = {
+    router: BrowserRouter;
+    store: Store<AppState>;
+    formError?: () => string | null;
+};
+
+export class RegistrationPage extends Block<RegistrationPageProps> {
+    constructor(props: RegistrationPageProps) {
+        super(props);
+
+        this.setProps({
+            formError: () => this.props.store.getState().registrationFormError,
+        });
+    }
+
+    componentDidMount() {
+        if (this.props.store.getState().user) {
+            this.props.router.go('/profile');
+        }
+    }
+
+
     protected getStateFromProps() {
         this.state = {
             values: {
@@ -22,6 +44,7 @@ export class RegistrationPage extends Block {
                 phone: '',
             },
             onLogin: () => {
+                let hasError = false;
                 const registrationData = {
                     first_name: (this.refs.first_name.firstElementChild as HTMLInputElement).value,
                     second_name: (this.refs.second_name.firstElementChild as HTMLInputElement).value,
@@ -53,7 +76,7 @@ export class RegistrationPage extends Block {
 
                 if (!registrationData.login) {
                     nextState.errors.login = 'Это поле обязательно для заполнения';
-                } else if (registrationData.login.length < 3 || registrationData.login.length >= 20) {
+                } else if (registrationData.login.length < LOGIN_MIN_LEN || registrationData.login.length >= LOGIN_MAX_LEN) {
                     nextState.errors.login = 'Длина поля от 3 до 20 символов';
                 }
 
@@ -78,7 +101,9 @@ export class RegistrationPage extends Block {
 
 
                 this.setState(nextState);
-
+                if (!hasError) {
+                    this.props.store.dispatch(login, registrationData);
+                }
                 console.log('action/registration', registrationData);
             }
         }
@@ -151,10 +176,10 @@ export class RegistrationPage extends Block {
                                 text="Регистрация"
                                 onClick=onLogin
                         }}}
-                        {{{Link text="Chat" to="/chat"}}}
                     </form>
                 </div>
             </div>
         `;
     }
 }
+export default withRouter(withStore(RegistrationPage));

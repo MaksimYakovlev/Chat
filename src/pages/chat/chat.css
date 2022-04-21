@@ -1,0 +1,5 @@
+.chat__messages_entry {
+    position: fixed;
+    display: flex;
+    bottom: 250px;
+}
