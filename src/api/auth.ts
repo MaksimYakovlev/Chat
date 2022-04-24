@@ -7,12 +7,12 @@ type LoginRequestData = {
 };
 
 type RegistrationRequestData = {
-    "first_name": "string",
-    "second_name": "string",
-    "login": "string",
-    "email": "string",
-    "password": "string",
-    "phone": "string"
+    first_name: "string",
+    second_name: "string",
+    login: "string",
+    email: "string",
+    password: "string",
+    phone: "string"
 };
 
 type LoginResponseData = {} | APIError;

@@ -10,7 +10,7 @@ export async function initApp(dispatch: Dispatch<AppState>) {
     const response = await authAPI.me();
 
     if (apiHasError(response)) {
-      return;
+      apiHasError(response)
     }
 
     dispatch({ user: transformUser(response as UserDTO) });

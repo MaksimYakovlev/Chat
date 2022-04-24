@@ -18,7 +18,11 @@ export const login = async (
   const response = await authAPI.login(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    try {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+    } catch(err) {
+      alert(err); // Error
+    }
     return;
   }
 
@@ -27,7 +31,11 @@ export const login = async (
   dispatch({ isLoading: false, loginFormError: null });
 
   if (apiHasError(response)) {
-    dispatch(logout);
+    try {
+      dispatch(logout);
+    } catch(err) {
+      console.error(err);// Error
+    }
     return;
   }
 
